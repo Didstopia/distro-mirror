@@ -1,0 +1,8 @@
+www/
+node_modules/
+app.yml
+*.log
+.DS_Store
+docker_*.sh
+.git/
+.git*

@@ -21,6 +21,7 @@ docker run \
     -e RSYNC_SOURCE_URL="rsync://fi.rsync.releases.ubuntu.com/releases/" \
     -e RSYNC_FLAGS="--recursive --times --links --safe-links --hard-links --stats --delete-after" \
     -e SCRIPT_SCHEDULE="everyminute" \
+    -e ENABLE_FANCYINDEX="true" \
     -p 8080:80 \
     -v $(pwd)/www:/www \
     --name docker-cron \

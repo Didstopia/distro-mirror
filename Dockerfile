@@ -3,7 +3,8 @@ FROM docker.didstopia.com/didstopia/docker-cron:latest
 # Install dependencies
 RUN apk add --no-cache \
     rsync \
-    nginx
+    nginx \
+    nginx-mod-http-fancyindex
 
 # Setup nginx
 RUN adduser -D -g 'www' www && \
@@ -23,6 +24,7 @@ ENV RSYNC_SOURCE_URL  ""
 ENV RSYNC_TARGET_PATH "/www"
 ENV RSYNC_EXCLUDE     ""
 ENV RSYNC_FLAGS       ""
+ENV ENABLE_FANCYINDEX "false"
 
 # Override existing environment variables
 ENV SCRIPT_WORKING_DIRECTORY "\/"

@@ -1,0 +1,31 @@
+# Set the Docker Compose version (3.7 -> 18.06.0+)
+version: '3.7'
+
+# Define the services for this project
+services:
+
+  # ubuntu-mirror:
+  #   build: .
+  #   restart: always
+  #   volumes:
+  #     - ./.tmp/ubuntu-mirror:/www
+  #   environment:
+  #     TZ: 'Europe/Helsinki'
+  #     ENABLE_FANCYINDEX: 'true'
+  #     SCRIPT_SCHEDULE: 'everyminute'
+  #     RSYNC_SOURCE_URL: 'rsync://fi.rsync.releases.ubuntu.com/releases/'
+  #     RSYNC_FLAGS: '--recursive --times --links --safe-links --hard-links --stats --delete-after'
+
+  alpine-mirror:
+    build: .
+    restart: always
+    volumes:
+      - ./.tmp/alpine-mirror:/www
+      - ./.tmp/alpine-mirror-rsync.log:/var/log/rsync.log
+    environment:
+      TZ: 'Europe/Helsinki'
+      ENABLE_FANCYINDEX: 'true'
+      SCRIPT_SCHEDULE: 'everyminute'
+      RSYNC_SOURCE_URL: 'rsync://rsync.alpinelinux.org/alpine/'
+      RSYNC_FLAGS: '--archive --update --hard-links --delete --delete-after --delay-updates --timeout=600'
+      RSYNC_EXCLUDE: '--exclude v2.*'

@@ -1,5 +1,6 @@
 www/
 node_modules/
+.tmp/
 
 # Docker project generated files to ignore
 #  if you want to ignore files created by your editor/tools,

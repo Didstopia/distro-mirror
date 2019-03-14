@@ -17,7 +17,12 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy scripts
 COPY entrypoint.sh /entrypoint_override.sh
-COPY mirror.sh /mirror
+COPY mirror.sh /mirror.sh
+
+# Setup scripts and other files
+RUN chmod +x /entrypoint_override.sh && \
+    chmod +x /mirror.sh && \
+    touch /var/log/rsync.log
 
 # Expose environment variables
 ENV RSYNC_SOURCE_URL  ""
@@ -28,7 +33,7 @@ ENV ENABLE_FANCYINDEX "false"
 
 # Override existing environment variables
 ENV SCRIPT_WORKING_DIRECTORY "\/"
-ENV SCRIPT_STARTUP_COMMAND   ".\/mirror"
+ENV SCRIPT_STARTUP_COMMAND   ".\/mirror.sh"
 ENV SCRIPT_SCHEDULE          "hourly"
 
 # Expose volumes

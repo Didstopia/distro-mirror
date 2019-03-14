@@ -6,3 +6,4 @@ app.yml
 docker_*.sh
 .git/
 .git*
+.tmp/

@@ -19,6 +19,7 @@ RUN adduser -D -g 'www' www && \
 # Replace nginx configuration files
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY gzip.conf /etc/nginx/conf.d/gzip.conf
+COPY fancyindex.conf /etc/nginx/conf.d/fancyindex.conf
 
 # Copy scripts
 COPY entrypoint.sh /entrypoint_override.sh

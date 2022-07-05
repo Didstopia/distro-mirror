@@ -21,11 +21,13 @@ services:
     restart: always
     volumes:
       - ./.tmp/alpine-mirror:/www
-      - ./.tmp/alpine-mirror-rsync.log:/var/log/rsync.log
+      # - ./.tmp/alpine-mirror-rsync.log:/var/log/rsync.log
+    ports:
+      - 8181:80
     environment:
       TZ: 'Europe/Helsinki'
       ENABLE_FANCYINDEX: 'true'
-      SCRIPT_SCHEDULE: 'everyminute'
-      RSYNC_SOURCE_URL: 'rsync://rsync.alpinelinux.org/alpine/'
-      RSYNC_FLAGS: '--archive --update --hard-links --delete --delete-after --delay-updates --timeout=600'
-      RSYNC_EXCLUDE: '--exclude v2.*'
+      # SCRIPT_SCHEDULE: 'daily'
+      # RSYNC_SOURCE_URL: 'rsync://rsync.alpinelinux.org/alpine/'
+      # RSYNC_FLAGS: '--archive --update --hard-links --delete --delete-after --delay-updates --timeout=600'
+      # RSYNC_EXCLUDE: '--exclude v2.*'

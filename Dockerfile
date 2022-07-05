@@ -36,9 +36,8 @@ RUN chmod +x /entrypoint_override.sh && \
 RUN wget https://github.com/Didstopia/Nginx-Fancyindex-Theme/archive/refs/heads/master.zip -O /tmp/fancyindex.zip && \
     unzip /tmp/fancyindex.zip -d /tmp && \
     rm -fr /tmp/fancyindex.zip && \
-    mkdir -p /etc/nginx/html/fancyindex_light /etc/nginx/html/fancyindex_dark && \
-    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-light/* /etc/nginx/html/fancyindex_light/ && \
-    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-dark/* /etc/nginx/html/fancyindex_dark/ && \
+    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-light /etc/nginx/html/ && \
+    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-dark /etc/nginx/html/ && \
     rm -rf /tmp/Nginx-Fancyindex-Theme-master
 
 # Expose environment variables

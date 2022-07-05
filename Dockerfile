@@ -19,7 +19,8 @@ RUN adduser -D -g 'www' www && \
 # Replace nginx configuration files
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY gzip.conf /etc/nginx/conf.d/gzip.conf
-COPY fancyindex.conf /etc/nginx/conf.d/fancyindex.conf
+COPY fancyindex_light.conf /etc/nginx/conf.d/fancyindex_light.conf
+COPY fancyindex_dark.conf /etc/nginx/conf.d/fancyindex_dark.conf
 
 # Copy scripts
 COPY entrypoint.sh /entrypoint_override.sh
@@ -35,8 +36,9 @@ RUN chmod +x /entrypoint_override.sh && \
 RUN wget https://github.com/Didstopia/Nginx-Fancyindex-Theme/archive/refs/heads/master.zip -O /tmp/fancyindex.zip && \
     unzip /tmp/fancyindex.zip -d /tmp && \
     rm -fr /tmp/fancyindex.zip && \
-    mkdir -p /etc/nginx/html/fancyindex && \
-    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-dark/* /etc/nginx/html/fancyindex/ && \
+    mkdir -p /etc/nginx/html/fancyindex_light /etc/nginx/html/fancyindex_dark && \
+    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-light/* /etc/nginx/html/fancyindex_light/ && \
+    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-dark/* /etc/nginx/html/fancyindex_dark/ && \
     rm -rf /tmp/Nginx-Fancyindex-Theme-master
 
 # Expose environment variables

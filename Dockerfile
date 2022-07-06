@@ -1,4 +1,4 @@
-FROM docker.didstopia.com/didstopia/docker-cron:latest
+FROM didstopia/cron:latest
 
 # Install dependencies
 RUN apk update && \
@@ -45,7 +45,8 @@ ENV RSYNC_SOURCE_URL  ""
 ENV RSYNC_TARGET_PATH "/www"
 ENV RSYNC_EXCLUDE     ""
 ENV RSYNC_FLAGS       ""
-ENV ENABLE_FANCYINDEX "false"
+ENV ENABLE_FANCYINDEX "true"
+ENV FANCYINDEX_THEME   ""
 
 # Override existing environment variables
 ENV SCRIPT_WORKING_DIRECTORY "\/"

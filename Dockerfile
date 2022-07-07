@@ -67,7 +67,7 @@ EXPOSE ${NGINX_PORT}
 
 # TODO: Increase to more sane values once done testing
 # Health check to verify that nginx is running
-HEALTHCHECK --interval=30s --timeout=5s --start-period=0s --retries=3 CMD curl -f "http://localhost:${NGINX_PORT}/" || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl -f "http://localhost:${NGINX_PORT}/" || exit 1
 
 # Override the entrypoint
 ENTRYPOINT ["/entrypoint_override.sh"]

@@ -1,4 +1,10 @@
+ARG NGINX_PORT="80"
+
 FROM didstopia/cron:latest
+
+# Re-export arguments and expose as environment variables
+ARG NGINX_PORT
+ENV NGINX_PORT=${NGINX_PORT}
 
 # Install dependencies
 RUN apk update && \
@@ -57,7 +63,11 @@ ENV SCRIPT_SCHEDULE          "hourly"
 VOLUME [ "/www" ]
 
 # Expose ports
-EXPOSE 80
+EXPOSE ${NGINX_PORT}
+
+# TODO: Increase to more sane values once done testing
+# Health check to verify that nginx is running
+HEALTHCHECK --interval=30s --timeout=5s --start-period=0s --retries=3 CMD curl -f "http://localhost:${NGINX_PORT}/" || exit 1
 
 # Override the entrypoint
 ENTRYPOINT ["/entrypoint_override.sh"]

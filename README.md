@@ -46,6 +46,7 @@ If either the `light` or `dark` fancy index themes are enabled, you can addition
 
 ## Known Issues
 
+- [ ] Image should implement a health check to verify that nginx is running
 - [ ] Mirroring immediately on startup should be optional and user configurable
 - [ ] Nginx should be started before verifying permissions, as permission verification can take a long time
 - [ ] Fancy index template paths should be user configurable, so they can always work with mirror specific templates (eg. Ubuntu)

@@ -23,6 +23,9 @@ docker run \
     didstopia/distro-mirror:latest
 ```
 
+Logs are written to `/var/log/rsync.log` by default, however you can customize this by setting the `RSYNC_LOG_FILE` environment variable.  
+For example, you can set it to `RSYNC_LOG_FILE=/dev/stdout` to write directly to the console, instead of to a log file.
+
 See [docker-compose.yml] and [Dockerfile] for further options.
 
 ## Scheduling
@@ -48,12 +51,12 @@ If either the `light` or `dark` fancy index themes are enabled, you can addition
 
 ## Known Issues
 
-- [ ] Image should implement a health check to verify that nginx is running
-- [ ] Mirroring immediately on startup should be optional and user configurable
-- [ ] Nginx should be started before verifying permissions, as permission verification can take a long time
+- [x] Image should implement a health check to verify that nginx is running
+- [x] Mirroring immediately on startup should be optional and user configurable
+- [x] Nginx should be started before verifying permissions, as permission verification can take a long time
 - [ ] Fancy index template paths should be user configurable, so they can always work with mirror specific templates (eg. Ubuntu)
-- [ ] Fancy index and its theme support should be fully customizable/configurable
-- [ ] Time zone should be taken into account in rsync and nginx logs (eg. when setting `TZ="Europe/Helsinki"`)
+- [x] Fancy index and its theme support should be fully customizable/configurable
+- [x] Time zone should be taken into account in rsync and nginx logs (eg. when setting `TZ="Europe/Helsinki"`)
 
 ## License
 

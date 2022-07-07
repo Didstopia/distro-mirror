@@ -6,6 +6,7 @@ FROM didstopia/cron:latest
 ARG NGINX_PORT
 ENV NGINX_PORT=${NGINX_PORT}
 
+# FIXME: Fix certificates in the base image instead of here!
 # Install dependencies
 RUN apk update && \
     apk add --no-cache \
@@ -15,6 +16,14 @@ RUN apk update && \
       nginx \
       nginx-mod-http-fancyindex && \
     update-ca-certificates
+
+# Install custom nginx fancyindex themes
+RUN wget https://github.com/Didstopia/Nginx-Fancyindex-Theme/archive/refs/heads/master.zip -O /tmp/fancyindex.zip && \
+    unzip /tmp/fancyindex.zip -d /tmp && \
+    rm -fr /tmp/fancyindex.zip && \
+    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-light /etc/nginx/html/ && \
+    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-dark /etc/nginx/html/ && \
+    rm -rf /tmp/Nginx-Fancyindex-Theme-master
 
 # Setup nginx
 RUN adduser -D -g 'www' www && \
@@ -37,27 +46,20 @@ RUN chmod +x /entrypoint_override.sh && \
     chmod +x /mirror.sh && \
     touch /var/log/rsync.log
 
-## TODO: Add runtime configurable support for toggling this custom theme, as well as choosing between the light and dark theme
-# Install nginx fancyindex dark theme
-RUN wget https://github.com/Didstopia/Nginx-Fancyindex-Theme/archive/refs/heads/master.zip -O /tmp/fancyindex.zip && \
-    unzip /tmp/fancyindex.zip -d /tmp && \
-    rm -fr /tmp/fancyindex.zip && \
-    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-light /etc/nginx/html/ && \
-    cp -r /tmp/Nginx-Fancyindex-Theme-master/Nginx-Fancyindex-Theme-dark /etc/nginx/html/ && \
-    rm -rf /tmp/Nginx-Fancyindex-Theme-master
-
 # Expose environment variables
 ENV RSYNC_SOURCE_URL  ""
 ENV RSYNC_TARGET_PATH "/www"
 ENV RSYNC_EXCLUDE     ""
 ENV RSYNC_FLAGS       ""
+ENV RSYNC_LOG_FILE    "/var/log/rsync.log"
 ENV ENABLE_FANCYINDEX "true"
 ENV FANCYINDEX_THEME   ""
+ENV MIRROR_ON_STARTUP "true"
 
 # Override existing environment variables
 ENV SCRIPT_WORKING_DIRECTORY "\/"
 ENV SCRIPT_STARTUP_COMMAND   ".\/mirror.sh"
-ENV SCRIPT_SCHEDULE          "hourly"
+ENV SCRIPT_SCHEDULE          "daily"
 
 # Expose volumes
 VOLUME [ "/www" ]
@@ -65,7 +67,7 @@ VOLUME [ "/www" ]
 # Expose ports
 EXPOSE ${NGINX_PORT}
 
-# TODO: Increase to more sane values once done testing
+# TODO: Increase to more sane values once done testing?
 # Health check to verify that nginx is running
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl -f "http://localhost:${NGINX_PORT}/" || exit 1
 

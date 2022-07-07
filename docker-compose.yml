@@ -16,18 +16,34 @@ services:
   #     RSYNC_SOURCE_URL: 'rsync://fi.rsync.releases.ubuntu.com/releases/'
   #     RSYNC_FLAGS: '--recursive --times --links --safe-links --hard-links --stats --delete-after'
 
-  alpine-mirror:
+  # alpine-mirror:
+  #   build: .
+  #   restart: always
+  #   volumes:
+  #     - ./data/alpine-mirror:/www
+  #     # - ./data/alpine-mirror-rsync.log:/var/log/rsync.log
+  #   ports:
+  #     - 8181:80
+  #   environment:
+  #     TZ: 'Europe/Helsinki'
+  #     ENABLE_FANCYINDEX: 'true'
+  #     SCRIPT_SCHEDULE: 'daily'
+  #     RSYNC_SOURCE_URL: 'rsync://rsync.alpinelinux.org/alpine/'
+  #     RSYNC_FLAGS: '--archive --update --hard-links --delete --delete-after --delay-updates --timeout=600'
+  #     RSYNC_EXCLUDE: '--exclude v2.*'
+
+  opnsense-mirror:
     build: .
     restart: always
     volumes:
-      - ./data/alpine-mirror:/www
-      # - ./data/alpine-mirror-rsync.log:/var/log/rsync.log
+      - ./data/opnsense-mirror:/www
+      # - ./data/opnsense-mirror-rsync.log:/var/log/rsync.log
     ports:
       - 8181:80
     environment:
       TZ: 'Europe/Helsinki'
       ENABLE_FANCYINDEX: 'true'
       SCRIPT_SCHEDULE: 'daily'
-      RSYNC_SOURCE_URL: 'rsync://rsync.alpinelinux.org/alpine/'
-      RSYNC_FLAGS: '--archive --update --hard-links --delete --delete-after --delay-updates --timeout=600'
-      RSYNC_EXCLUDE: '--exclude v2.*'
+      RSYNC_SOURCE_URL: 'rsync://mirror.fra10.de.leaseweb.net/opnsense/'
+      RSYNC_FLAGS: '--archive --numeric-ids --stats --hard-links --delete --delete-after --timeout=600'
+      RSYNC_EXCLUDE: '--exclude /README.md --exclude /HEADER.md --exclude=/*:10:* --exclude=/*:11:* --exclude=/*:12:*'

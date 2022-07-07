@@ -102,7 +102,9 @@ configureFancyIndex "${ENABLE_FANCYINDEX}" "${FANCYINDEX_THEME}"
 # Start nginx
 startNginx
 
+# TODO: Make this optional and configurable with an environment variable
 # Run the script on startup
+echo "Running mirror process on startup ..." > /dev/stdout
 /mirror.sh &
 
 # Continue with the original entrypoint logic, passing along any arguments

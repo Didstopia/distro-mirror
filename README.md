@@ -1,3 +1,5 @@
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/didstopia/distro-mirror?label=Docker%20Hub%20Build&style=for-the-badge)
+
 # Distro Mirror
 
 A Docker image for mirroring popular Linux distribution files, such as Ubuntu or Alpine.
